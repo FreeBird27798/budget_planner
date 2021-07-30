@@ -185,11 +185,11 @@ class _AddActionScreenState extends State<AddActionScreen> with Helpers {
                   height: SizeConfig().scaleHeight(11),
                 ),
                 Container(
+                  margin: EdgeInsets.only(bottom: SizeConfig().scaleHeight(31)),
                   padding: EdgeInsets.symmetric(
                     horizontal: SizeConfig().scaleWidth(14),
                   ),
                   height: SizeConfig().scaleHeight(112),
-                  margin: EdgeInsets.only(bottom: SizeConfig().scaleHeight(31)),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(8),
@@ -215,9 +215,6 @@ class _AddActionScreenState extends State<AddActionScreen> with Helpers {
                       hintStyle: TextStyle(color: AppColors.SEARCH_HINT_COLOR),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: SizeConfig().scaleHeight(30),
                 ),
                 BudgetAppElevatedButton(
                   text: AppLocalizations.of(context)!.add,

@@ -3,6 +3,7 @@ import 'package:budget_planner/getx_controllers/user_getx_controller.dart';
 import 'package:budget_planner/models/currency.dart';
 import 'package:budget_planner/models/user.dart';
 import 'package:budget_planner/preferences/app_pref_controller.dart';
+import 'package:budget_planner/utils/app_colors.dart';
 import 'package:budget_planner/utils/size_config.dart';
 import 'package:budget_planner/widgets/budget_app_elevated_button.dart';
 import 'package:budget_planner/widgets/card_with_logo.dart';
@@ -79,49 +80,66 @@ class _ProfileScreenState extends State<ProfileScreen> {
           SizedBox(
             height: SizeConfig().scaleHeight(43),
           ),
-          Column(
-            children: [
-              // AppLocalizations.of(context)!.none
-              RowTextField(
-                textController: _nameTextController,
-                text: AppLocalizations.of(context)!.name + ':',
-                hintText: AppLocalizations.of(context)!.none,
-                onChanged: (value) => validateForm(),
-              ),
-              Divider(),
-              RowTextField(
-                textController: _emailTextController,
-                keyboardType: TextInputType.emailAddress,
-                text: AppLocalizations.of(context)!.email_address + ':',
-                hintText: AppLocalizations.of(context)!.none,
-                onChanged: (value) => validateForm(),
-              ),
-              Divider(),
-              RowField(
-                title: AppLocalizations.of(context)!.currency,
-                value: _currency?.nameEn ?? AppLocalizations.of(context)!.none,
-                onTap: () => navigateToCurrencyScreen(),
-                iconData: Icons.arrow_forward_ios,
-              ),
-              Divider(),
-              RowTextField(
-                textController: _dailyLimitTextController,
-                keyboardType: TextInputType.number,
-                maxLength: 7,
-                text: AppLocalizations.of(context)!.daily_limit + ':',
-                hintText: '\$ 5000',
-                onChanged: (value) => validateForm(),
-              ),
-              Divider(),
-              RowField(
-                  title: AppLocalizations.of(context)!.change_your_pin,
-                  value: _pinCode,
-                  onTap: () => navigateToPinCodeScreen()),
-            ],
+          Container(
+            margin: EdgeInsets.only(bottom: SizeConfig().scaleHeight(25)),
+            padding: EdgeInsets.symmetric(
+              horizontal: SizeConfig().scaleWidth(17),
+              vertical: SizeConfig().scaleHeight(10),
+            ),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(8),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.EX_IN_BOX_SHADOW_COLOR,
+                    blurRadius: 18,
+                    spreadRadius: 0,
+                    offset: Offset(0, 10),
+                  )
+                ]),
+            child: Column(
+              children: [
+                // AppLocalizations.of(context)!.none
+                RowTextField(
+                  textController: _nameTextController,
+                  text: AppLocalizations.of(context)!.name + ':',
+                  hintText: AppLocalizations.of(context)!.none,
+                  onChanged: (value) => validateForm(),
+                ),
+                Divider(),
+                RowTextField(
+                  textController: _emailTextController,
+                  keyboardType: TextInputType.emailAddress,
+                  text: AppLocalizations.of(context)!.email_address + ':',
+                  hintText: AppLocalizations.of(context)!.none,
+                  onChanged: (value) => validateForm(),
+                ),
+                Divider(),
+                RowField(
+                  title: AppLocalizations.of(context)!.currency,
+                  value:
+                      _currency?.nameEn ?? AppLocalizations.of(context)!.none,
+                  onTap: () => navigateToCurrencyScreen(),
+                  iconData: Icons.arrow_forward_ios,
+                ),
+                Divider(),
+                RowTextField(
+                  textController: _dailyLimitTextController,
+                  keyboardType: TextInputType.number,
+                  maxLength: 7,
+                  text: AppLocalizations.of(context)!.daily_limit + ':',
+                  hintText: '\$ 5000',
+                  onChanged: (value) => validateForm(),
+                ),
+                Divider(),
+                RowField(
+                    title: AppLocalizations.of(context)!.change_your_pin,
+                    value: _pinCode,
+                    onTap: () => navigateToPinCodeScreen()),
+              ],
+            ),
           ),
-          SizedBox(
-            height: SizeConfig().scaleHeight(47),
-          ),
+
           BudgetAppElevatedButton(
             text: AppLocalizations.of(context)!.save,
             onPressed: () async => performUpdateProfile(),
@@ -200,7 +218,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       user.email = _emailTextController.text;
     }
     print('APP PREF EMAIL : ${AppPrefController().user.email}');
-    print('EMAIL_TEXT_EDITOR_CONTROLLER EMAIL : ${AppPrefController().user.email}');
+    print(
+        'EMAIL_TEXT_EDITOR_CONTROLLER EMAIL : ${AppPrefController().user.email}');
     print('User EMAIL : ${AppPrefController().user.email}');
     user.pin = int.parse(_pinCode);
     user.dayLimit = double.parse(_dailyLimitTextController.text);

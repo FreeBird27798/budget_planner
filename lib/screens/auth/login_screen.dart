@@ -3,9 +3,10 @@ import 'package:budget_planner/preferences/app_pref_controller.dart';
 import 'package:budget_planner/utils/app_colors.dart';
 import 'package:budget_planner/utils/helpers.dart';
 import 'package:budget_planner/utils/size_config.dart';
+import 'package:budget_planner/widgets/app_text_field.dart';
 import 'package:budget_planner/widgets/budget_app_elevated_button.dart';
+import 'package:budget_planner/widgets/budget_app_text.dart';
 import 'package:budget_planner/widgets/card_with_logo.dart';
-import 'package:budget_planner/widgets/default_textfield_container.dart';
 import 'package:budget_planner/widgets/sub_title_text.dart';
 import 'package:budget_planner/widgets/title_text.dart';
 import 'package:flutter/gestures.dart';
@@ -27,8 +28,6 @@ class _LoginScreenState extends State<LoginScreen> with Helpers {
   late TextEditingController _emailTextEditingController;
   late TextEditingController _pinCodeTextEditingController;
 
-  late TapGestureRecognizer _tapGestureRecognizer;
-
   @override
   void initState() {
     // TODO: implement initState
@@ -36,13 +35,7 @@ class _LoginScreenState extends State<LoginScreen> with Helpers {
 
     _emailTextEditingController = TextEditingController();
     _pinCodeTextEditingController = TextEditingController();
-
-    _tapGestureRecognizer = TapGestureRecognizer();
-    _tapGestureRecognizer.onTap = onCreateAccountTap;
   }
-
-  void onCreateAccountTap() =>
-      Navigator.pushNamed(context, '/create_account_screen');
 
   @override
   void dispose() {
@@ -50,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> with Helpers {
     _emailTextEditingController.dispose();
     _pinCodeTextEditingController.dispose();
 
-    _tapGestureRecognizer.dispose();
+    // _tapGestureRecognizer.dispose();
     super.dispose();
   }
 
@@ -89,29 +82,49 @@ class _LoginScreenState extends State<LoginScreen> with Helpers {
               SizedBox(
                 height: SizeConfig().scaleHeight(50),
               ),
-              DefaultTextFieldContainer(
-                hintText: AppLocalizations.of(context)!.email_address,
-                keyboardType: TextInputType.emailAddress,
-                textEditingController: _emailTextEditingController,
-                startContentPadding: SizeConfig().scaleWidth(20),
-                endContentPadding: SizeConfig().scaleWidth(20),
-                topContentPadding: SizeConfig().scaleHeight(11),
-                bottomContentPadding: SizeConfig().scaleHeight(11),
-                onChanged: (value) => validateForm(),
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: [
+                    BoxShadow(
+                      offset: Offset(0, 0),
+                      blurRadius: 6,
+                      color: Colors.black.withOpacity(0.21),
+                    )
+                  ],
+                ),
+                child: AppTextField(
+                  enablePadding: true,
+                  hintText: AppLocalizations.of(context)!.email_address,
+                  keyboardType: TextInputType.emailAddress,
+                  textEditingController: _emailTextEditingController,
+                  onChanged: (value) => validateForm(),
+                ),
               ),
               SizedBox(
                 height: SizeConfig().scaleHeight(15),
               ),
-              DefaultTextFieldContainer(
-                hintText: AppLocalizations.of(context)!.pin_code,
-                keyboardType: TextInputType.text,
-                obscureText: true,
-                textEditingController: _pinCodeTextEditingController,
-                startContentPadding: SizeConfig().scaleWidth(20),
-                endContentPadding: SizeConfig().scaleWidth(20),
-                topContentPadding: SizeConfig().scaleHeight(11),
-                bottomContentPadding: SizeConfig().scaleHeight(11),
-                onChanged: (value) => validateForm(),
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: [
+                    BoxShadow(
+                      offset: Offset(0, 0),
+                      blurRadius: 6,
+                      color: Colors.black.withOpacity(0.21),
+                    )
+                  ],
+                ),
+                child: AppTextField(
+                  enablePadding: true,
+                  hintText: AppLocalizations.of(context)!.pin_code,
+                  keyboardType: TextInputType.text,
+                  obscureText: true,
+                  textEditingController: _pinCodeTextEditingController,
+                  onChanged: (value) => validateForm(),
+                ),
               ),
               SizedBox(
                 height: SizeConfig().scaleHeight(30),
@@ -124,31 +137,23 @@ class _LoginScreenState extends State<LoginScreen> with Helpers {
               SizedBox(
                 height: SizeConfig().scaleHeight(20),
               ),
-              RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: AppLocalizations.of(context)!.do_not_have_account,
-                      style: TextStyle(
-                        color: AppColors.LIGHT_TEXT_COLOR,
-                        fontSize: SizeConfig().scaleTextFont(15),
-                        fontWeight: FontWeight.w400,
-                        letterSpacing: 0.06,
-                      ),
-                    ),
-                    TextSpan(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  BudgetAppText(
+                    text: AppLocalizations.of(context)!.do_not_have_account,
+                    textColor: AppColors.LIGHT_TEXT_COLOR,
+                  ),
+                  TextButton(
+                    onPressed: () =>
+                        Navigator.pushNamed(context, '/create_account_screen'),
+                    child: BudgetAppText(
                       text: AppLocalizations.of(context)!.create_now,
-                      recognizer: _tapGestureRecognizer,
-                      style: TextStyle(
-                        color: AppColors.CREATE_NOW_COLOR,
-                        fontSize: SizeConfig().scaleTextFont(15),
-                        fontWeight: FontWeight.w400,
-                        letterSpacing: 0.06,
-                      ),
+                      textColor: AppColors.CREATE_NOW_COLOR,
                     ),
-                  ],
-                ),
+                    style: TextButton.styleFrom(padding: EdgeInsets.zero),
+                  ),
+                ],
               ),
             ],
           ),
@@ -184,6 +189,7 @@ class _LoginScreenState extends State<LoginScreen> with Helpers {
         pin: _pinCodeTextEditingController.text);
     if (status) {
       AppPrefController().setIsLoggedIn(status);
+      AppPrefController().setIsFirstTime(!status);
       Navigator.pushReplacementNamed(context, '/main_screen');
       showSnackBar(context,
           message: AppLocalizations.of(context)!.successful_login);

@@ -16,6 +16,7 @@ class DefaultTextFieldContainer extends StatelessWidget {
   final double bottomContentPadding;
   final FontWeight fontWeight;
   final bool obscureText;
+  final bool enablePadding;
   final int maxLines;
   final void Function(String value)? onChanged;
 
@@ -33,6 +34,7 @@ class DefaultTextFieldContainer extends StatelessWidget {
     this.bottomContentPadding = 0,
     this.fontWeight = FontWeight.w400,
     this.obscureText = false,
+    this.enablePadding = false,
     this.onChanged
   });
 
@@ -45,12 +47,12 @@ class DefaultTextFieldContainer extends StatelessWidget {
           controller: textEditingController,
           obscureText: obscureText,
           decoration: InputDecoration(
-            contentPadding: EdgeInsetsDirectional.only(
-              start: SizeConfig().scaleWidth(startContentPadding),
-              end: SizeConfig().scaleWidth(endContentPadding),
-              top: SizeConfig().scaleHeight(topContentPadding),
-              bottom: SizeConfig().scaleHeight(bottomContentPadding),
-            ),
+            contentPadding:enablePadding ? EdgeInsetsDirectional.only(
+              start: SizeConfig().scaleWidth(15),
+              end: SizeConfig().scaleWidth(15),
+              top: SizeConfig().scaleHeight(22),
+              bottom: SizeConfig().scaleHeight(22),
+            ) : null,
             focusedBorder: InputBorder.none,
             enabledBorder: InputBorder.none,
             hintText: hintText,

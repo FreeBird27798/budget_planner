@@ -4,12 +4,10 @@ import 'package:budget_planner/utils/app_colors.dart';
 import 'package:budget_planner/utils/size_config.dart';
 import 'package:budget_planner/widgets/action_item.dart';
 import 'package:budget_planner/widgets/actions_date_text.dart';
-import 'package:budget_planner/widgets/actions_list.dart';
 import 'package:budget_planner/widgets/budget_app_elevated_button.dart';
 import 'package:budget_planner/widgets/budget_app_text.dart';
 import 'package:budget_planner/widgets/circular_progress_info.dart';
 import 'package:budget_planner/widgets/empty_data_widget.dart';
-import 'package:budget_planner/widgets/sub_title_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -90,6 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Container(
                 padding: EdgeInsetsDirectional.only(
                   top: SizeConfig().scaleHeight(19),
+                  bottom: SizeConfig().scaleHeight(27),
                   start: SizeConfig().scaleWidth(12),
                   end: SizeConfig().scaleWidth(12),
                 ),
@@ -194,6 +193,4 @@ class _HomeScreenState extends State<HomeScreen> {
   void navigateToActionsDetailsScreen() {
     Navigator.pushNamed(context, '/action_details_screen');
   }
-
-
 }

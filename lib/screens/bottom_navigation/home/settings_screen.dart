@@ -144,48 +144,58 @@ class _SettingsScreenState extends State<SettingsScreen> with Helpers {
         builder: (context) {
           return StatefulBuilder(
               builder: (BuildContext context, StateSetter setState) {
-            return BottomSheet(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                // elevation: 5,
-                backgroundColor: Colors.white,
-                onClosing: () {},
-                builder: (context) {
-                  return SizedBox(
-                    height: SizeConfig().scaleHeight(200),
-                    child: ListView(
-                      children: [
-                        RadioListTile<String>(
-                            title: Text("English"),
-                            value: 'en',
-                            groupValue: _lang,
-                            onChanged: (String? value) {
-                              setState(() {
+            return Container(
+              clipBehavior: Clip.antiAlias,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(20),
+                    topLeft: Radius.circular(20),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 18,
+                      spreadRadius: 0,
+                      offset: Offset(0, 10),
+                    )
+                  ]),
+              child: BottomSheet(
+                  onClosing: () {},
+                  builder: (context) {
+                    return SizedBox(
+                      height: SizeConfig().scaleHeight(200),
+                      child: ListView(
+                        children: [
+                          RadioListTile<String>(
+                              title: Text("English"),
+                              value: 'en',
+                              groupValue: _lang,
+                              onChanged: (String? value) {
+                                setState(() {
+                                  if (value != null)
+                                    setState(() {
+                                      _lang = value;
+                                      changeLang(_lang);
+                                      Navigator.pop(context);
+                                    });
+                                });
+                              }),
+                          RadioListTile<String>(
+                              title: Text("عربي"),
+                              value: 'ar',
+                              groupValue: _lang,
+                              onChanged: (String? value) {
                                 if (value != null)
                                   setState(() {
                                     _lang = value;
                                     changeLang(_lang);
                                     Navigator.pop(context);
                                   });
-                              });
-                            }),
-                        RadioListTile<String>(
-                            title: Text("عربي"),
-                            value: 'ar',
-                            groupValue: _lang,
-                            onChanged: (String? value) {
-                              if (value != null)
-                                setState(() {
-                                  _lang = value;
-                                  changeLang(_lang);
-                                  Navigator.pop(context);
-                                });
-                            }),
-                      ],
-                    ),
-                  );
-                });
+                              }),
+                        ],
+                      ),
+                    );
+                  }),
+            );
           });
         });
   }

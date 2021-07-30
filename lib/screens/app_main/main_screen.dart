@@ -1,8 +1,6 @@
 import 'package:budget_planner/getx_controllers/action_getx_controller.dart';
 import 'package:budget_planner/getx_controllers/bn_getx_controller.dart';
 import 'package:budget_planner/getx_controllers/category_getx_controller.dart';
-import 'package:budget_planner/getx_controllers/currency_getx_controller.dart';
-import 'package:budget_planner/getx_controllers/user_getx_controller.dart';
 import 'package:budget_planner/utils/app_colors.dart';
 import 'package:budget_planner/utils/size_config.dart';
 import 'package:budget_planner/widgets/add_action_button.dart';
@@ -20,24 +18,17 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   String _title = '';
 
-  //
-  UsersGetxController usersGetxController = Get.put(UsersGetxController());
 
-  CategoryGetxController categoryGetxController =
-      Get.put(CategoryGetxController());
-
-  ActionGetxController actionGetxController = Get.put(ActionGetxController());
+  CategoryGetxController _categoryGetxController = Get.put(CategoryGetxController());
+  ActionGetxController _actionGetxController = Get.put(ActionGetxController());
 
   @override
   void initState() {
     super.initState();
-
-    // setTitle(0);
   }
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig().designWidth(4.14).designHeight(8.96).init(context);
     return GetX(
       init: BnGetxController(),
       builder: (BnGetxController controller) {
