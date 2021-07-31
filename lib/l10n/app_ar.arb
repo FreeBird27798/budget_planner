@@ -114,5 +114,7 @@
   "remove_account_error": "فشل إزالة الحساب، حاول فيما بعد.",
   "action_save_message": "تم حفظ الحركة بنجاح",
   "action_save_error": "فشل حفظ حركة جديدة!",
+  "profile_updated_message": "تم تحديث الملف الشخصي بنجاح",
+  "profile_updated_error": "فشل تحديث الملف الشخصي",
   "successful_login": "تم تسجيل الدخول بنجاح"
 }

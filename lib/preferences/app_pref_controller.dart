@@ -6,8 +6,6 @@ class AppPrefController {
   final String langCodeKey = 'language_code';
   final String isLoggedInKey = 'isLoggedIn';
 
-  // final String isShowingKey = 'isShowing';
-
   static final AppPrefController _instance = AppPrefController._internal();
   late SharedPreferences _sharedPreferences;
 
@@ -50,6 +48,7 @@ class AppPrefController {
     await _sharedPreferences.setInt('currencyId', user.currencyId);
     await _sharedPreferences.setDouble('dayLimit', user.dayLimit);
     await _sharedPreferences.setInt('pin', user.pin);
+    await _sharedPreferences.setBool(isLoggedInKey, true);
   }
 
   User get user {
@@ -65,11 +64,8 @@ class AppPrefController {
 
   bool get loggedIn => _sharedPreferences.getBool(isLoggedInKey) ?? false;
 
-  Future<bool> setIsLoggedIn(bool loggedIn) async {
-    return await _sharedPreferences.setBool(isLoggedInKey, loggedIn);
-  }
-
   Future<bool> logout() async {
     return await _sharedPreferences.clear();
   }
+
 }

@@ -4,6 +4,7 @@ import 'package:budget_planner/models/currency.dart';
 import 'package:budget_planner/models/user.dart';
 import 'package:budget_planner/preferences/app_pref_controller.dart';
 import 'package:budget_planner/utils/app_colors.dart';
+import 'package:budget_planner/utils/helpers.dart';
 import 'package:budget_planner/utils/size_config.dart';
 import 'package:budget_planner/widgets/budget_app_elevated_button.dart';
 import 'package:budget_planner/widgets/card_with_logo.dart';
@@ -20,7 +21,7 @@ class ProfileScreen extends StatefulWidget {
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileScreenState extends State<ProfileScreen> with Helpers {
   late TextEditingController _nameTextController;
   late TextEditingController _emailTextController;
   late TextEditingController _dailyLimitTextController;
@@ -113,6 +114,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   text: AppLocalizations.of(context)!.email_address + ':',
                   hintText: AppLocalizations.of(context)!.none,
                   onChanged: (value) => validateForm(),
+                  readOnly: true,
+                  // errorText:'Email Already Exists',
                 ),
                 Divider(),
                 RowField(
@@ -193,34 +196,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
         _pinCode.isNotEmpty;
   }
 
+  bool isEmailChanged() {
+    return _emailTextController.text != AppPrefController().user.email;
+  }
+
   void performUpdateProfile() async {
-    if (_createdEnabled) {
-      await updateProfile();
-    } else {
-      //SHOW ERROR MESSAGE
-    }
+    if (_createdEnabled) await updateProfile();
   }
 
   Future<void> updateProfile() async {
-    bool status = await UsersGetxController.to.createAccount(user: user);
+    bool status = await UsersGetxController.to.updateUser(user: user);
     if (status) {
       CurrencyGetxController.to.undoCheckedCurrency();
-      Navigator.pushReplacementNamed(context, '/success_screen');
-    } else {
-      //SHOW MESSAGE - ERROR
+      showSnackBar(
+        context,
+        message: AppLocalizations.of(context)!.profile_updated_message,
+      );
     }
   }
 
   User get user {
-    User user = UsersGetxController.to.user;
+    User user = User();
+    user.id = AppPrefController().user.id;
     user.name = _nameTextController.text;
-    if (_emailTextController.text != AppPrefController().user.email) {
+    if (isEmailChanged()) {
       user.email = _emailTextController.text;
+    } else {
+      user.email = AppPrefController().user.email;
     }
-    print('APP PREF EMAIL : ${AppPrefController().user.email}');
-    print(
-        'EMAIL_TEXT_EDITOR_CONTROLLER EMAIL : ${AppPrefController().user.email}');
-    print('User EMAIL : ${AppPrefController().user.email}');
     user.pin = int.parse(_pinCode);
     user.dayLimit = double.parse(_dailyLimitTextController.text);
     user.currencyId = _currency!.id;

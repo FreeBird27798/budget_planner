@@ -116,5 +116,7 @@
   "remove_account_error": "Failed to remove user account, Try Again later",
   "action_save_message": "Action saved successfully",
   "action_save_error": "Failed to save new action!",
+  "profile_updated_message": "Profile Updated Successfully",
+  "profile_updated_error": "Failed to update Profile!",
   "successful_login": "Logged In Successfully"
 }

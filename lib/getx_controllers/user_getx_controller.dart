@@ -28,11 +28,24 @@ class UsersGetxController extends GetxController {
     return false;
   }
 
+  Future<bool> updateUser({required User user}) async {
+    var count = await _userDbController.updateUser(user: user);
+    if (count != 0) {
+      await AppPrefController().saveUser(user: user);
+      print('USER UPDATED SUCCESSFULLY');
+      return true;
+    }
+      print('CAN NOT  UPDATE USER');
+    return false;
+  }
+
   Future<bool> login({required String email, required String pin}) async {
     User? user = await _userDbController.login(email: email, pin: pin);
     if (user != null) {
       await AppPrefController().saveUser(user: user);
       this.user = user;
+      refresh();
+      update();
       return true;
     }
     return false;
