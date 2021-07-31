@@ -32,12 +32,11 @@ class _HomeScreenState extends State<HomeScreen> {
           .toStringAsFixed(2);
       String expenses = (controller.totalExpenses.value).toStringAsFixed(2);
       String balance = (controller.totalIncomes.value).toStringAsFixed(2);
-      return Container(
+      return Padding(
         padding: EdgeInsetsDirectional.only(
           start: SizeConfig().scaleWidth(20),
           end: SizeConfig().scaleWidth(20),
         ),
-        color: Colors.white,
         child: Column(
           children: [
             Container(
@@ -86,6 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Expanded(
               child: Container(
+                margin: EdgeInsetsDirectional.only(bottom:SizeConfig().scaleHeight(27) ),
                 padding: EdgeInsetsDirectional.only(
                   top: SizeConfig().scaleHeight(19),
                   bottom: SizeConfig().scaleHeight(27),
@@ -99,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       spreadRadius: 2,
                       offset: Offset(0, 5)),
                 ]),
-                height: SizeConfig().scaleHeight(487),
+                // height: SizeConfig().scaleHeight(487),
                 child: controller.actions.isNotEmpty
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,

@@ -9,19 +9,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class SuccessOperationScreen extends StatefulWidget {
-  const SuccessOperationScreen({Key? key}) : super(key: key);
+class SuccessActionScreen extends StatefulWidget {
+  const SuccessActionScreen({Key? key}) : super(key: key);
 
   @override
-  _SuccessOperationScreenState createState() => _SuccessOperationScreenState();
+  _SuccessActionScreenState createState() => _SuccessActionScreenState();
 }
 
-class _SuccessOperationScreenState extends State<SuccessOperationScreen> {
+class _SuccessActionScreenState extends State<SuccessActionScreen> {
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    Future.delayed(Duration(milliseconds: 3000), () {
+    Future.delayed(Duration(milliseconds: 1000), () {
       Navigator.pushReplacementNamed(context, '/main_screen');
     });
   }

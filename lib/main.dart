@@ -12,7 +12,7 @@ import 'package:budget_planner/screens/auth/pin_code_screen.dart';
 import 'package:budget_planner/screens/launch_screen.dart';
 import 'package:budget_planner/screens/auth/login_screen.dart';
 import 'package:budget_planner/screens/on_boarding/on_boarding_screen.dart';
-import 'package:budget_planner/screens/success_operation_screen.dart';
+import 'package:budget_planner/screens/success_action_screen.dart';
 import 'package:budget_planner/screens/success_screen.dart';
 import 'package:budget_planner/storage/db_provider.dart';
 import 'package:budget_planner/utils/app_colors.dart';
@@ -122,7 +122,7 @@ class _MyAppState extends State<MyApp> {
         '/create_account_screen': (context) => CreateAccountScreen(),
         '/pin_code_screen': (context) => PinCodeScreen(),
         '/success_screen': (context) => SuccessScreen(),
-        '/success_operation_screen': (context) => SuccessOperationScreen(),
+        '/success_action_screen': (context) => SuccessActionScreen(),
         '/main_screen': (context) => MainScreen(),
         '/settings_screen': (context) => SettingsScreen(),
         '/actions_screen': (context) => ActionsScreen(),

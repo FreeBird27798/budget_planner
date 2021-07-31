@@ -188,7 +188,6 @@ class _LoginScreenState extends State<LoginScreen> with Helpers {
         email: _emailTextEditingController.text,
         pin: _pinCodeTextEditingController.text);
     if (status) {
-      AppPrefController().setIsLoggedIn(status);
       AppPrefController().setIsFirstTime(!status);
       Navigator.pushReplacementNamed(context, '/main_screen');
       showSnackBar(context,

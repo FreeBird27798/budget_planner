@@ -1,11 +1,12 @@
-import 'package:budget_planner/enums.dart';
 import 'package:budget_planner/getx_controllers/user_getx_controller.dart';
 import 'package:budget_planner/models/category.dart';
-import 'package:budget_planner/storage/controllers/Category_db_controller.dart';
+import 'package:budget_planner/storage/controllers/category_db_controller.dart';
 import 'package:get/get.dart';
 
+import '../enums.dart';
+
 class CategoryGetxController extends GetxController {
-  final CategoryDbController _dbController = CategoryDbController();
+  CategoryDbController _dbController = CategoryDbController();
   RxList<Category> categories = <Category>[].obs;
 
   static CategoryGetxController get to => Get.find();
@@ -17,29 +18,18 @@ class CategoryGetxController extends GetxController {
     super.onInit();
   }
 
+  Future<void> read() async {
+    categories.value = await _dbController.read();
+  }
+
   Future<bool> create({required Category category}) async {
-    var newCategoryId = await _dbController.create(category);
-    if (newCategoryId != 0) {
-      category.id = newCategoryId;
+    int newId = await _dbController.create(category);
+    if (newId != 0) {
+      category.id = newId;
       categories.add(category);
       return true;
     }
     return false;
-  }
-
-  Future read() async {
-    categories.value = await _dbController.read();
-  }
-
-  Category getCategoryById({required int id, bool setSelected = false}) {
-    int index = categories.indexWhere((element) => element.id == id);
-    if (setSelected) categories[index].checked = true;
-    return categories[index];
-  }
-
-  List<Category> getCategoriesByType({required CategoryType type}) {
-    bool expenses = type == CategoryType.Expense;
-    return categories.where((element) => element.expense == expenses).toList();
   }
 
   void changeCheckStatus(int id) {
@@ -51,9 +41,8 @@ class CategoryGetxController extends GetxController {
   }
 
   Future<bool> deleteUserCategories() async {
-    bool deleted = await _dbController
-        .deleteUserCategories(UsersGetxController.to.user.id);
-    if (deleted) categories.clear();
+    bool deleted = await _dbController.deleteUserCategories(UsersGetxController.to.user.id);
+    if(deleted) categories.clear();
     return deleted;
   }
 
@@ -67,5 +56,16 @@ class CategoryGetxController extends GetxController {
     categories.forEach((element) {
       element.checked = false;
     });
+  }
+
+  Category getCategoryById({required int id, bool setSelected = false}) {
+    int index = categories.indexWhere((element) => element.id == id);
+    if (setSelected) categories[index].checked = true;
+    return categories[index];
+  }
+
+  List<Category> getCategoriesByType({required CategoryType type}) {
+    bool expenses = type == CategoryType.Expense;
+    return categories.where((element) => element.expense == expenses).toList();
   }
 }

@@ -312,11 +312,12 @@ class _AddActionScreenState extends State<AddActionScreen> with Helpers {
           ? AppLocalizations.of(context)!.action_save_message
           : AppLocalizations.of(context)!.action_save_error;
       if (created) {
-        Navigator.pop(context);
+        Navigator.pushReplacementNamed(context, '/success_action_screen');
         showSnackBar(context, message: message);
+        clear();
+      } else {
+        showSnackBar(context, message: message, error: !created);
       }
-      showSnackBar(context, message: message, error: !created);
-      if (created) clear();
     }
   }
 
