@@ -27,6 +27,7 @@ class CategoryGetxController extends GetxController {
     if (newId != 0) {
       category.id = newId;
       categories.add(category);
+      categories.refresh();
       return true;
     }
     return false;

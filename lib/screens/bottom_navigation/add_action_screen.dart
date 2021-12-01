@@ -248,10 +248,9 @@ class _AddActionScreenState extends State<AddActionScreen> with Helpers {
       validateForm();
     }
   }
-
   void navigateToCurrencyScreen() async {
     var currency =
-        await Navigator.pushNamed(context, '/currency_screen') as Currency?;
+    await Navigator.pushNamed(context, '/currency_screen') as Currency?;
     if (currency != null) {
       setState(() {
         _currency = currency;
@@ -304,6 +303,7 @@ class _AddActionScreenState extends State<AddActionScreen> with Helpers {
     }
     return false;
   }
+
 
   Future<void> saveAction() async {
     if (_buttonEnabled) {
